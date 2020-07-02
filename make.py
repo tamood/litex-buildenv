@@ -24,6 +24,7 @@ def get_args(parser, platform='opsis', target='hdmi2usb'):
 
     parser.add_argument("--no-compile-firmware", action="store_true", help="do not compile the firmware")
     parser.add_argument("--override-firmware", action="store", default=None, help="override firmware with file")
+    parser.add_argument("--firmware", action="store", default=None, help="firmware")
 
 
 def get_builddir(args):
@@ -145,7 +146,10 @@ def main():
             # firmware. Check whether to use the stub or default firmware
             # should be refined (perhaps soc attribute?).
             if "main_ram" in soc.mem_regions:
-                builder.add_software_package("firmware", "{}/firmware".format(os.getcwd()))
+                if args.firmware == "firmware":
+                    builder.add_software_package("firmware", "{}/firmware".format(os.getcwd()))
+                else:
+                    builder.add_software_package(args.firmware, ("{}/firmware/"+args.firmware).format(os.getcwd()))
             else:
                 builder.add_software_package("stub", "{}/firmware/stub".format(os.getcwd()))
         vns = builder.build(**dict(args.build_option))

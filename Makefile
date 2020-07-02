@@ -173,6 +173,7 @@ MAKE_CMD=\
 		--target=$(TARGET) \
 		--cpu-type=$(CPU) \
 		--iprange=$(TFTP_IPRANGE) \
+		--firmware=$(FIRMWARE) \
 		$(MISOC_EXTRA_CMDLINE) \
 		$(LITEX_EXTRA_CMDLINE) \
 		$(MAKE_LITEX_EXTRA_CMDLINE) \
