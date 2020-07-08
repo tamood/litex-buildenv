@@ -23,8 +23,8 @@ class BaseSoC(SoCCore):
         SoCCore.__init__(self, platform, sys_clk_freq, **kwargs)
         
         # SRAM and Main memory ---------------------------------------------------------------------------------
-        Mem.add_bram("sram", self.mem_map["sram"], 0x800)
-        Mem.add_asram("main_ram", self.mem_map["main_ram"], 0x100000)
+        self.add_bram("sram", self.mem_map["sram"], 0x800)
+        self.add_asram("main_ram", self.mem_map["main_ram"], 0x100000)
         
         # CRG --------------------------------------------------------------------------------------
         self.submodules.crg = _CRG(platform, sys_clk_freq)
@@ -34,7 +34,6 @@ class BaseSoC(SoCCore):
         #self.add_csr("info")
         self.submodules.cas = cas.ControlAndStatus(platform, sys_clk_freq)
         self.add_csr("cas")
-        print(dir(SoCCore))
 
     def add_bram(self, name, origin, size, contents=[], mode="rw"):
         ram_bus = wishbone.Interface(data_width=self.bus.data_width)
